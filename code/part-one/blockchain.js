@@ -1,7 +1,7 @@
 'use strict';
 
 const { createHash } = require('crypto');
-const signing = require('./signing');
+const { getPublicKey, sign } = require('./signing');
 
 
 /**
@@ -22,8 +22,16 @@ class Transaction {
    *     other properties, signed with the provided private key
    */
   constructor(privateKey, recipient, amount) {
-    // Enter your solution here
+    this.source = getPublicKey(privateKey);
+    this.recipient = recipient;
+    this.amount = amount;
 
+    const signature = sign(
+      privateKey, 
+      this.source + this.recipient + this.amount
+    );
+
+    this.signature = signature;
   }
 }
 
