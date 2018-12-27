@@ -52,10 +52,10 @@ class Block {
    *   - hash: a unique hash string generated from the other properties
    */
   constructor(transactions, previousHash) {
-    // Your code here
     this.transactions = transactions;
     this.previousHash = previousHash;
     this.nonce = 0;
+    this.hash = this.calculateHash(0);
   }
 
   /**
@@ -68,7 +68,6 @@ class Block {
    *   properties change.
    */
   calculateHash(nonce) {
-    // Your code here
     this.nonce = nonce;
     this.hash = createHash('sha256')
       .update(
@@ -95,16 +94,16 @@ class Blockchain {
    *   - blocks: an array of blocks, starting with one genesis block
    */
   constructor() {
-    // Your code here
-
+    this.blocks = [];
+    const genesisBlock = new Block([], null);
+    this.blocks.push(genesisBlock);
   }
 
   /**
    * Simply returns the last block added to the chain.
    */
   getHeadBlock() {
-    // Your code here
-
+    return this.blocks[this.blocks.length - 1];
   }
 
   /**
@@ -112,8 +111,9 @@ class Blockchain {
    * adding it to the chain.
    */
   addBlock(transactions) {
-    // Your code here
-
+    const previousBlock = this.getHeadBlock();
+    const newBlock = new Block(transactions, previousBlock.hash);
+    this.blocks.push(newBlock);
   }
 
   /**
@@ -126,8 +126,19 @@ class Blockchain {
    *   we make the blockchain mineable later.
    */
   getBalance(publicKey) {
-    // Your code here
+    let sum = 0;
 
+    this.blocks.forEach(block => {
+      block.transactions.forEach(transaction => {
+        if (transaction.recipient === publicKey) {
+          sum += transaction.amount;
+        } else if (transaction.source === publicKey) {
+          sum -= transaction.amount;
+        }
+      });
+    });
+
+    return sum;
   }
 }
 
