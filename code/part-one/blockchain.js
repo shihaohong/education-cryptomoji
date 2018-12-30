@@ -55,7 +55,7 @@ class Block {
     this.transactions = transactions;
     this.previousHash = previousHash;
     this.nonce = 0;
-    this.hash = this.calculateHash(0);
+    this.calculateHash(0);
   }
 
   /**
