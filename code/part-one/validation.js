@@ -31,7 +31,28 @@ const isValidTransaction = transaction => {
  */
 const isValidBlock = block => {
   // Your code here
+  let currentHash = createHash('sha256')
+    .update(
+      block.transactions + 
+      block.previousHash + 
+      block.nonce
+    )
+    .digest('hex');
 
+  if (currentHash !== block.hash) {
+    return false;
+  }
+
+  let { transactions } = block;
+
+  for (let i = 0; i < transactions.length; i++) {
+    let transaction = transactions[i];
+    if (!isValidTransaction(transaction)) {
+      return false;
+    }
+  }
+
+  return true;
 };
 
 /**
