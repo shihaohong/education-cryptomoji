@@ -11,8 +11,16 @@ const signing = require('./signing');
  *   - have been modified since signing
  */
 const isValidTransaction = transaction => {
-  // Enter your solution here
+  let isValidSignature = signing.verify(
+    transaction.source, 
+    transaction.source + transaction.recipient + transaction.amount, 
+    transaction.signature);
 
+  if (!isValidSignature || transaction.amount < 0) {
+    return false;
+  }
+
+  return true;
 };
 
 /**
