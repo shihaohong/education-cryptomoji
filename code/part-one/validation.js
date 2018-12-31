@@ -99,8 +99,12 @@ const isValidChain = blockchain => {
  * (in theory) make the blockchain fail later validation checks;
  */
 const breakChain = blockchain => {
-  // Your code here
+  // simply removes the first block after genesis block
+  let { blocks } = blockchain;
 
+  blocks.splice(1, 1);
+
+  return blockchain;  
 };
 
 module.exports = {
