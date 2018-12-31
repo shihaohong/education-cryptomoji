@@ -30,7 +30,6 @@ const isValidTransaction = transaction => {
  *   - they contain any invalid transactions
  */
 const isValidBlock = block => {
-  // Your code here
   let currentHash = createHash('sha256')
     .update(
       block.transactions + 
@@ -66,8 +65,32 @@ const isValidBlock = block => {
  *   - contains any invalid transactions
  */
 const isValidChain = blockchain => {
-  // Your code here
+  const { blocks } = blockchain;
 
+  for (let i = 0; i < blocks.length; i++) {
+    const block = blocks[i];
+
+    if (!isValidBlock(block)) {
+      return false;
+    }
+
+    const { transactions, previousHash } = block;
+
+    if (i === 0) {
+      if (transactions.length !== 0 || previousHash !== null) {
+        return false;
+      }
+    } else {
+      const previousBlock = blocks[i - 1];
+      const actualPreviousHash = previousBlock.hash;
+
+      if (previousHash === null || previousHash !== actualPreviousHash) {
+        return false;
+      }
+    }
+  }
+
+  return true;
 };
 
 /**
