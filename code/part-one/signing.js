@@ -82,9 +82,9 @@ const verify = (publicKey, message, signature) => {
   const bufferPublicKey = Buffer.from(publicKey, 'hex');
   const bufferSignature = Buffer.from(signature, 'hex');
 
-  const hash = createHash('sha256');
-  hash.update(message);  
-  const bufferMessage = hash.digest();
+  const buffferMessage = createHash('sha256')
+    .update(message)  
+    .digest();
 
   return secp256k1.verify(bufferMessage, bufferSignature, bufferPublicKey);
 };
