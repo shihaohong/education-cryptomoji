@@ -76,6 +76,8 @@ class Block {
         this.nonce
       )
       .digest('hex');
+
+    return this.hash;
   }
 }
 
