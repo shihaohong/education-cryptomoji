@@ -82,7 +82,7 @@ const verify = (publicKey, message, signature) => {
   const bufferPublicKey = Buffer.from(publicKey, 'hex');
   const bufferSignature = Buffer.from(signature, 'hex');
 
-  const buffferMessage = createHash('sha256')
+  const bufferMessage = createHash('sha256')
     .update(message)  
     .digest();
 
