@@ -1,7 +1,7 @@
 'use strict';
 
 const { createHash } = require('crypto');
-const signing = require('./signing');
+const { getPublicKey, sign } = require('./signing');
 const { Block, Blockchain } = require('./blockchain');
 
 
@@ -18,8 +18,19 @@ class MineableTransaction {
    * signer.
    */
   constructor(privateKey, recipient = null, amount) {
-    // Enter your solution here
+    if (recipient === null) {
+      this.source = null;
+      this.recipient = getPublicKey(privateKey);
+    } else {
+      this.source = getPublicKey(privateKey);
+      this.recipient = recipient;
+    }
 
+    this.amount = amount;
+    this.signature = sign(
+      privateKey,
+      this.source + this.recipient + this.amount
+    );
   }
 }
 
