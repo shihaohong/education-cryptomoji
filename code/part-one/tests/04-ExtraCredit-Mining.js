@@ -11,7 +11,7 @@ const {
 } = require('../mining');
 
 
-describe.skip('Mining module', function() {
+describe('Mining module', function() {
 
   describe('MineableTransaction', function() {
     let signer = null;
@@ -70,6 +70,9 @@ describe.skip('Mining module', function() {
       expect(!!block.hash).to.be.false;
     });
 
+    it('should be instantiated without a nonce', function() {
+      expect(!!block.nonce).to.be.false;
+    });
   });
 
   describe('MineableChain', function() {

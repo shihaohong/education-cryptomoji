@@ -45,8 +45,10 @@ class MineableBlock extends Block {
    * become valid after it is mined.
    */
   constructor(transactions, previousHash) {
-    // Your code here
+    super(transactions, previousHash);
 
+    this.hash = null;
+    this.nonce = null;
   }
 }
 
